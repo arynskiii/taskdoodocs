@@ -35,6 +35,6 @@ func NewService(cfg config.SMTPConfig) *Service {
 	return &Service{
 		Unziper: NewUnzipperService(),
 		Ziper:   NewZiperService(),
-		Email:   NewAddressService(cfg),
+		Email:   NewEmailService(cfg),
 	}
 }

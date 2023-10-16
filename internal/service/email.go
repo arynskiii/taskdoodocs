@@ -8,19 +8,19 @@ import (
 	"net/smtp"
 )
 
-type Address struct {
+type EmailService struct {
 	smtpUsername string
 	smtpPassword string
 }
 
-func NewAddressService(cfg config.SMTPConfig) *Address {
-	return &Address{
+func NewEmailService(cfg config.SMTPConfig) *EmailService {
+	return &EmailService{
 		smtpUsername: cfg.Username,
 		smtpPassword: cfg.Password,
 	}
 }
 
-func (s *Address) CheckFile(file *multipart.FileHeader) bool {
+func (s *EmailService) CheckFile(file *multipart.FileHeader) bool {
 	t := file.Header.Get("Content-Type")
 
 	AllowedTypes := map[string]bool{
@@ -31,7 +31,7 @@ func (s *Address) CheckFile(file *multipart.FileHeader) bool {
 	return AllowedTypes[t]
 }
 
-func (s *Address) FileToBytes(file *multipart.FileHeader) ([]byte, error) {
+func (s *EmailService) FileToBytes(file *multipart.FileHeader) ([]byte, error) {
 	f, err := file.Open()
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (s *Address) FileToBytes(file *multipart.FileHeader) ([]byte, error) {
 	return fileBytes, nil
 }
 
-func (s *Address) SendFileToEmails(fileBytes []byte, filename string, mimeType string, emails []string) error {
+func (s *EmailService) SendFileToEmails(fileBytes []byte, filename string, mimeType string, emails []string) error {
 	e := email.NewEmail()
 	e.Subject = "Doodocs voz'mite menya"
 	e.Text = []byte("Please find the attached file.")
