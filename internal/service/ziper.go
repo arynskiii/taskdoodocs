@@ -2,7 +2,6 @@ package service
 
 import (
 	"archive/zip"
-	"fmt"
 	"io"
 	"mime/multipart"
 	"os"
@@ -16,7 +15,7 @@ func NewZiperService() *ZiperrService {
 
 func (s *ZiperrService) CheckFile(file *multipart.FileHeader) bool {
 	t := file.Header.Get("Content-Type")
-	fmt.Println(t)
+
 	AllowedTypes := map[string]bool{
 		"image/png":       true,
 		"application/xml": true,
