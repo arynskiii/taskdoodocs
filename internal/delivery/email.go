@@ -19,6 +19,7 @@ func (h *Handler) sendfile(c *gin.Context) {
 	// Извлекаем файл из запроса
 	_, fileHeader, err := c.Request.FormFile("file")
 	if err != nil {
+
 		newErrorResponse(c, http.StatusBadRequest, "Failed to retrieve the file")
 
 		return
